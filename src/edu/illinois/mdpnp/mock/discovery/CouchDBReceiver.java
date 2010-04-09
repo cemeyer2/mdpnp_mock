@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+import org.jcouchdb.db.Database;
+
 public class CouchDBReceiver 
 {
 	private static final String GROUP_ADDRESS = "230.0.0.1";
@@ -30,7 +32,7 @@ public class CouchDBReceiver
 			socket.receive(packet);
 
 			String received = new String(packet.getData());
-			System.out.println("Receiver: received " + received);
+//			System.out.println("Receiver: received " + received);
 
 			socket.leaveGroup(group);
 			socket.close();
@@ -38,13 +40,41 @@ public class CouchDBReceiver
 		}
 		catch(IOException e)
 		{
-			System.err.println("Error receiving");
+//			System.err.println("Error receiving");
 			return null;
 		}
 	}
 	
+	public String getCouchDBAddress()
+	{
+		String receive = receive();
+		if(receive == null)
+		{
+			return null;
+		}
+		String[] potentialAddresses = receive.split(";;");
+		for(String address : potentialAddresses)
+		{
+			address = address.substring(1); //chop off leading forward slash
+//			System.out.println("trying: "+address);
+			try
+			{
+				Database db = new Database(address, "mdpnp");
+				db.getStatus(); //this throws an exception if connection fails
+//				System.out.println("success");
+				return address;
+			}
+			catch(Exception e)
+			{
+//				System.out.println("fail");
+//				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	public static void main(String[] args)
 	{
-		new CouchDBReceiver().receive();
+		System.out.println("Found CouchDB at: "+new CouchDBReceiver().getCouchDBAddress());
 	}
 }

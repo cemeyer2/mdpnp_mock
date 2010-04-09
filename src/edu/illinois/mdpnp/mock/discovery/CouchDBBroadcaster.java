@@ -56,7 +56,7 @@ public class CouchDBBroadcaster implements Runnable
             Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
             for (InetAddress inetAddress : Collections.list(inetAddresses)) 
             {
-            	address += inetAddress.toString()+";";
+            	address += inetAddress.toString()+";;";
             }
         }
 		
