@@ -55,7 +55,6 @@ public class CouchDBReceiver
 		String[] potentialAddresses = receive.split(";;");
 		for(String address : potentialAddresses)
 		{
-			address = address.substring(1); //chop off leading forward slash
 //			System.out.println("trying: "+address);
 			try
 			{
