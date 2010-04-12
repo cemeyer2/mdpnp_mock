@@ -35,6 +35,7 @@ public class CouchDBBroadcaster implements Runnable
 	
 	private void calculateBroadcastString() throws SocketException
 	{
+		System.out.println("Broadcaster: recalculating broadcast string");
 		String address = "";
 		Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
         for (NetworkInterface netint : Collections.list(nets))
@@ -44,7 +45,7 @@ public class CouchDBBroadcaster implements Runnable
             {
             	try
             	{
-            		String ip = inetAddress.toString().substring(1);
+            		String ip = inetAddress.getHostAddress();
 	            	Database db = new Database(ip, "mdpnp");
 	    			db.getStatus();
 	            	address += ip+";;";
@@ -56,7 +57,7 @@ public class CouchDBBroadcaster implements Runnable
             }
         }
         broadcast_string = address;
-//        System.out.println("Broadcaster: recalculated broadcast string to "+broadcast_string);
+        System.out.println("Broadcaster: recalculated broadcast string to "+broadcast_string);
 	}
 	
 	public void run()
