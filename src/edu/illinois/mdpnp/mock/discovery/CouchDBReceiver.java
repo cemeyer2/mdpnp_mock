@@ -32,7 +32,7 @@ public class CouchDBReceiver
 			socket.receive(packet);
 
 			String received = new String(packet.getData());
-//			System.out.println("Receiver: received " + received);
+			System.out.println("Receiver: received " + received);
 
 			socket.leaveGroup(group);
 			socket.close();
@@ -55,18 +55,9 @@ public class CouchDBReceiver
 		String[] potentialAddresses = receive.split(";;");
 		for(String address : potentialAddresses)
 		{
-//			System.out.println("trying: "+address);
-			try
+			if(new HasCouchDB(address, 5000).hasCouchDB())
 			{
-				Database db = new Database(address, "mdpnp");
-				db.getStatus(); //this throws an exception if connection fails
-//				System.out.println("success");
 				return address;
-			}
-			catch(Exception e)
-			{
-//				System.out.println("fail");
-//				e.printStackTrace();
 			}
 		}
 		return null;

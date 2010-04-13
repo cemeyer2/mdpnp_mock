@@ -46,6 +46,7 @@ public class CouchDBBroadcaster implements Runnable
             	try
             	{
             		String ip = inetAddress.getHostAddress();
+            		System.out.println(ip);
 	            	Database db = new Database(ip, "mdpnp");
 	    			db.getStatus();
 	            	address += ip+";;";
