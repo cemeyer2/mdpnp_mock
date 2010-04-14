@@ -46,10 +46,16 @@ public class CouchDBBroadcaster implements Runnable
             	try
             	{
             		String ip = inetAddress.getHostAddress();
-            		System.out.println(ip);
-	            	Database db = new Database(ip, "mdpnp");
-	    			db.getStatus();
-	            	address += ip+";;";
+            		
+	            	if(new HasCouchDB(ip, 1000).hasCouchDB())
+	            	{
+	            		address += ip+";;";
+	            		System.out.println(ip+" has CouchDB");
+	            	}
+	            	else
+	            	{
+	            		System.out.println(ip+" does not have CouchDB");
+	            	}
             	}
             	catch(Exception e)
             	{
