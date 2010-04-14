@@ -21,7 +21,7 @@ public class HasCouchDB implements Runnable
 		{
 			Thread th = new Thread(this);
 			th.start();
-			th.join(timeout*1000);
+			Thread.sleep(timeout);
 			if(th.isAlive())
 			{
 				th.interrupt();

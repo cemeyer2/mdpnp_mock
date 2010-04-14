@@ -55,7 +55,8 @@ public class CouchDBReceiver
 		String[] potentialAddresses = receive.split(";;");
 		for(String address : potentialAddresses)
 		{
-			if(new HasCouchDB(address, 5000).hasCouchDB())
+			System.out.println("looking for CouchDB at "+address);
+			if(new HasCouchDB(address, 2000).hasCouchDB())
 			{
 				return address;
 			}
@@ -66,5 +67,6 @@ public class CouchDBReceiver
 	public static void main(String[] args)
 	{
 		System.out.println("Found CouchDB at: "+new CouchDBReceiver().getCouchDBAddress());
+		System.exit(0);
 	}
 }
