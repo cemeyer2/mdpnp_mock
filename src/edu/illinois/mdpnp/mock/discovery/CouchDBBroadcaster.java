@@ -87,10 +87,7 @@ public class CouchDBBroadcaster implements Runnable
 	
 	private void broadcast() throws IOException
 	{
-		
-		
 		byte[] buffer = broadcast_string.getBytes();
-
         InetAddress group = InetAddress.getByName(GROUP_ADDRESS);
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, PORT);
         socket.send(packet);
